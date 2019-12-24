@@ -63,6 +63,8 @@ if (window.netlifyIdentity) {
 }
 
 export default class GitGatewayAuthenticationPage extends React.Component {
+  static authClient;
+
   constructor(props) {
     super(props);
     component = this;
