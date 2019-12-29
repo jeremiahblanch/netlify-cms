@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import React from 'react';
 import styled from '@emotion/styled';
 import { partial } from 'lodash';
@@ -103,7 +102,7 @@ export default class GitGatewayAuthenticationPage extends React.Component {
     onLogin: PropTypes.func.isRequired,
     inProgress: PropTypes.bool.isRequired,
     error: PropTypes.node,
-    config: ImmutablePropTypes.map,
+    config: PropTypes.object.isRequired,
   };
 
   state = { email: '', password: '', errors: {} };
@@ -149,7 +148,7 @@ export default class GitGatewayAuthenticationPage extends React.Component {
     if (window.netlifyIdentity) {
       return (
         <AuthenticationPage
-          logoUrl={config.get('logo_url')}
+          logoUrl={config.logo_url}
           onLogin={this.handleIdentity}
           renderButtonContent={() => 'Login with Netlify Identity'}
         />
@@ -158,8 +157,8 @@ export default class GitGatewayAuthenticationPage extends React.Component {
 
     return (
       <AuthenticationPage
-        logoUrl={config.get('logo_url')}
-        siteUrl={config.get('site_url')}
+        logoUrl={config.logo_url}
+        siteUrl={config.site_url}
         renderPageContent={() => (
           <AuthForm onSubmit={this.handleLogin}>
             {!error ? null : <ErrorMessage>{error}</ErrorMessage>}
