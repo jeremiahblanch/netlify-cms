@@ -118,7 +118,7 @@ const baseConfig = ({ target = isProduction ? 'umd' : 'umddir' } = {}) => ({
     extensions: ['.ts', '.tsx', '.js', '.json'],
   },
   plugins: Object.values(plugins()).map(plugin => plugin()),
-  devtool: isTest ? '' : 'source-map',
+  devtool: isTest ? '' : '#source-map',
   target: 'web',
 
   /**
