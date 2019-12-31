@@ -18,6 +18,7 @@ class EntriesCollection extends React.Component {
     entries: ImmutablePropTypes.list,
     isFetching: PropTypes.bool.isRequired,
     viewStyle: PropTypes.string,
+    listFilter: PropTypes.object,
     cursor: PropTypes.object.isRequired,
     loadEntries: PropTypes.func.isRequired,
     traverseCollectionCursor: PropTypes.func.isRequired,
@@ -43,13 +44,37 @@ class EntriesCollection extends React.Component {
     traverseCollectionCursor(collection, action);
   };
 
+  filterEntries = () => {
+    const { entries, listFilter } = this.props;
+
+    if (!listFilter || !listFilter.field || !listFilter.value) {
+      return entries;
+    }
+
+    return entries.filter((entry, idx) => {
+      let found;
+      entry._root.nodes.forEach(node => {
+        if (
+          node.entry[0] === listFilter.field &&
+          node.entry[1] === listFilter.value
+        ) {
+          found = true;
+        }
+      });
+
+      return found;
+    });
+
+
+  }
+
   render() {
     const { collection, entries, isFetching, viewStyle, cursor } = this.props;
 
     return (
       <Entries
         collections={collection}
-        entries={entries}
+        entries={this.filterEntries()}
         isFetching={isFetching}
         collectionName={collection.get('label')}
         viewStyle={viewStyle}

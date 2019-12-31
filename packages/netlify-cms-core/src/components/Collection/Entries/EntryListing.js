@@ -39,6 +39,8 @@ export default class EntryListing extends React.Component {
     const descriptionField = selectInferedField(collection, 'description');
     const imageField = selectInferedField(collection, 'image');
     const fields = selectFields(collection);
+
+    console.log(fields);
     const inferedFields = [titleField, descriptionField, imageField];
     const remainingFields =
       fields && fields.filter(f => inferedFields.indexOf(f.get('name')) === -1);

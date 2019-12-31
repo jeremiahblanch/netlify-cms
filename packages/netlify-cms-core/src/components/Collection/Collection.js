@@ -29,12 +29,13 @@ class Collection extends React.Component {
   };
 
   state = {
+    listFilter: {},
     viewStyle: VIEW_STYLE_LIST,
   };
 
   renderEntriesCollection = () => {
     const { collection } = this.props;
-    return <EntriesCollection collection={collection} viewStyle={this.state.viewStyle} />;
+    return <EntriesCollection collection={collection} viewStyle={this.state.viewStyle} listFilter={this.state.listFilter}/>;
   };
 
   renderEntriesSearch = () => {
@@ -46,6 +47,15 @@ class Collection extends React.Component {
     if (this.state.viewStyle !== viewStyle) {
       this.setState({ viewStyle });
     }
+  };
+
+  handleChangeListFilter = listFilter => {
+    this.setState({
+      listFilter: {
+        ...this.state.listFilter,
+        ...listFilter,
+      }
+    });
   };
 
   render() {
@@ -61,8 +71,10 @@ class Collection extends React.Component {
               collectionLabelSingular={collection.get('label_singular')}
               collectionDescription={collection.get('description')}
               newEntryUrl={newEntryUrl}
+              listFilter={this.state.listFilter}
               viewStyle={this.state.viewStyle}
               onChangeViewStyle={this.handleChangeViewStyle}
+              onChangeListFilter={this.handleChangeListFilter}
             />
           )}
           {isSearchResults ? this.renderEntriesSearch() : this.renderEntriesCollection()}
